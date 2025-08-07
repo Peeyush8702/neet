@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>NEET Test</title>
+  <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+  <h2>Welcome to NEET Mock Test</h2>
+  <div id="question-box"></div>
+  <button onclick="submitTest()">Submit</button>
+  <div id="result"></div>
+
+  <script>
+    let current = 0;
+    let questions = [];
+    let answers = [];
+
+    fetch('questions.json')
+      .then(res => res.json())
+      .then(data => {
+        questions = data;
+        answers = new Array(questions.length).fill(null);
+        showQuestion();
+      });
+
+    function showQuestion() {
+      if (current >= questions.length) return;
+
+      const q = questions[current];
+      let html = `<h3>Q${current + 1}: ${q.q}</h3>`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="q${current}" value="${i}" onchange="answers[${current}]=${i}"> ${opt}</label><br>`;
+      });
+
+      html += `<br><button onclick="next()">Next</button>`;
+      document.getElementById('question-box').innerHTML = html;
+    }
+
+    function next() {
+      current++;
+      if (current < questions.length) {
+        showQuestion();
+      } else {
+        submitTest();
+      }
+    }
+
+    function submitTest() {
+      let score = 0;
+      questions.forEach((q, i) => {
+        if (answers[i] == q.answer) score++;
+      });
+      document.getElementById('question-box').innerHTML = '';
+      document.getElementById('result').innerText = `Your Score: ${score} / ${questions.length}`;
+    }
+  </script>
+</body>
+</html>

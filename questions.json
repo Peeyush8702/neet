@@ -1,0 +1,27 @@
+[
+  {
+    "q": "What is the basic unit of heredity?",
+    "options": ["Gene", "Chromosome", "DNA", "RNA"],
+    "answer": 0
+  },
+  {
+    "q": "Which organ is responsible for purification of blood?",
+    "options": ["Heart", "Liver", "Kidney", "Lungs"],
+    "answer": 2
+  },
+  {
+    "q": "Which vitamin is synthesized in the skin?",
+    "options": ["Vitamin A", "Vitamin B12", "Vitamin C", "Vitamin D"],
+    "answer": 3
+  },
+  {
+    "q": "Which of the following is not a connective tissue?",
+    "options": ["Blood", "Bone", "Cartilage", "Skin"],
+    "answer": 3
+  },
+  {
+    "q": "The powerhouse of the cell is:",
+    "options": ["Nucleus", "Mitochondria", "Ribosome", "Chloroplast"],
+    "answer": 1
+  }
+]
