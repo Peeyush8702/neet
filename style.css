@@ -1,497 +1,205 @@
-:root {
-  --gradient-light: linear-gradient(135deg, #00c6ff, #0072ff);
-  --gradient-dark: linear-gradient(135deg, #1e3c72, #2a5298);
-  --background-light: #f2f9ff;
-  --background-dark: #0f172a;
-  --text-light: #1e293b;
-  --text-dark: #f1f5f9;
-  --glass-bg-light: rgba(255, 255, 255, 0.7);
-  --glass-bg-dark: rgba(30, 41, 59, 0.5);
-  --border-light: rgba(255, 255, 255, 0.2);
-  --border-dark: rgba(255, 255, 255, 0.1);
-}
-
-* {
-  box-sizing: border-box;
-}
-
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
-  background-color: var(--background-light);
-  color: var(--text-light);
-  transition: background-color 0.5s ease, color 0.5s ease;
-  background: linear-gradient(120deg, #d0e9ff, #ffffff);
-  min-height: 100vh;
-  background-attachment: fixed;
-  overflow-x: hidden;
+  background: linear-gradient(135deg, #e0f7fa, #e1bee7);
+  transition: background 0.4s;
 }
 
-body.dark-mode {
-  background-color: var(--background-dark);
-  color: var(--text-dark);
-  background: linear-gradient(120deg, #0f172a, #1e293b);
+.dark-theme {
+  background: linear-gradient(135deg, #1e1e2f, #2d2d44);
+  color: white;
 }
 
-/* Header */
 header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.5rem 2rem;
-  background: var(--gradient-light);
-  color: white;
-  transition: background 0.4s ease;
+  background: rgba(0, 0, 0, 0.1);
+  padding: 15px 20px;
+  backdrop-filter: blur(5px);
 }
 
-body.dark-mode header {
-  background: var(--gradient-dark);
-}
-
-header h1 {
-  margin: 0;
-  font-size: 1.8rem;
-}
-
-/* Toggle button */
-#themeToggle {
-  background: white;
-  border: none;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
+.theme-toggle-container button {
   font-size: 1.2rem;
-  color: #0072ff;
   cursor: pointer;
-  box-shadow: 0 5px 10px rgba(0,0,0,0.1);
-  transition: transform 0.3s ease, background 0.4s ease;
+  border: none;
+  background: transparent;
 }
 
-#themeToggle:hover {
-  transform: rotate(15deg) scale(1.1);
+#testContainer, #resultContainer {
+  max-width: 700px;
+  margin: auto;
+  padding: 20px;
 }
 
-body.dark-mode #themeToggle {
-  background: #1e3c72;
-  color: white;
-}
-
-/* Glassmorphic Cards */
-main, section {
-  max-width: 800px;
-  margin: 2rem auto;
-  padding: 2rem;
-  border-radius: 20px;
-  background: var(--glass-bg-light);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(15px);
-  border: 1px solid var(--border-light);
-  animation: fadeIn 0.8s ease-in-out;
-  transition: background 0.4s ease;
-}
-
-body.dark-mode main, body.dark-mode section {
-  background: var(--glass-bg-dark);
-  border: 1px solid var(--border-dark);
-}
-
-/* Animations */
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Timer */
 #timer {
-  text-align: right;
-  font-size: 1.2rem;
-  margin-bottom: 1rem;
   font-weight: bold;
+  text-align: right;
+  margin-bottom: 10px;
 }
 
-/* Question */
 #questionText {
-  font-size: 1.4rem;
-  margin-bottom: 1rem;
-}
-
-/* Options */
-#options {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+  font-size: 1.2rem;
+  margin-bottom: 15px;
 }
 
 .option {
-  padding: 1rem 1.2rem;
-  border-radius: 15px;
-  background: rgba(255, 255, 255, 0.6);
-  border: 1px solid #cfe0ff;
+  background: white;
+  padding: 12px;
+  margin-bottom: 10px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: transform 0.3s ease, background 0.3s ease;
-  font-weight: 500;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.1s ease-in-out;
 }
 
 .option:hover {
-  transform: scale(1.03);
-  background: rgba(0, 195, 255, 0.1);
+  transform: scale(1.01);
 }
 
 .option.selected {
-  background: linear-gradient(135deg, #00c6ff, #0072ff);
+  background: linear-gradient(to right, #81d4fa, #ba68c8);
   color: white;
-  border: none;
-  transform: scale(1.05);
 }
 
-body.dark-mode .option {
-  background: rgba(30, 41, 59, 0.7);
-  border: 1px solid #334155;
+.option::after {
+  content: "";
+  position: absolute;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  transform: scale(0);
+  opacity: 0;
+  pointer-events: none;
 }
 
-body.dark-mode .option:hover {
-  background: rgba(45, 60, 90, 0.6);
+.option.ripple::after {
+  animation: ripple 0.5s ease-out;
 }
 
-/* Button */
-button {
-  margin-top: 1.5rem;
-  padding: 0.9rem 2rem;
-  font-size: 1rem;
-  border: none;
-  border-radius: 12px;
-  background: linear-gradient(135deg, #00c6ff, #0072ff);
-  color: white;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0, 114, 255, 0.3);
-  transition: transform 0.3s ease, opacity 0.3s ease;
+@keyframes ripple {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(3);
+    opacity: 0;
+  }
 }
 
-button:hover {
-  transform: scale(1.05);
-  opacity: 0.9;
-}
-
-/* Progress Bar */
 #progress {
-  margin-top: 2rem;
-  height: 20px;
-  background: rgba(0, 0, 0, 0.05);
+  height: 10px;
+  background: #ccc;
+  margin-top: 20px;
   border-radius: 10px;
   overflow: hidden;
 }
 
-body.dark-mode #progress {
-  background: rgba(255, 255, 255, 0.1);
-}
-
 #progressBar {
   height: 100%;
-  background: linear-gradient(135deg, #00c6ff, #0072ff);
   width: 0%;
+  background: linear-gradient(to right, #00bcd4, #9c27b0);
   transition: width 0.3s ease-in-out;
 }
 
-/* Result Section */
-#resultContainer h2 {
-  font-size: 2rem;
-  margin-bottom: 1rem;
-}
-
-#scoreText {
-  font-size: 1.4rem;
-  margin-bottom: 1.5rem;
-}
-#review-panel {
-  margin-top: 2rem;
-  text-align: left;
-}
-
-.review-card {
-  background: rgba(255, 255, 255, 0.25);
-  padding: 1rem;
-  border-radius: 12px;
-  margin-bottom: 1rem;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(6px);
-}
-
-body.dark .review-card {
-  background: rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-:root {
-  --bg-gradient: linear-gradient(135deg, #e0f7fa, #ffffff);
-  --text-color: #000;
-  --card-bg: rgba(255, 255, 255, 0.7);
-  --option-hover: #cce7ff;
-}
-
-.dark-theme {
-  --bg-gradient: linear-gradient(135deg, #2c3e50, #4ca1af);
-  --text-color: #fff;
-  --card-bg: rgba(0, 0, 0, 0.3);
-  --option-hover: #37474f;
-}
-
-/* Apply theme variables */
-body {
-  background: var(--bg-gradient);
-  color: var(--text-color);
-  transition: all 0.3s ease-in-out;
-}
-
-.card, .option {
-  background: var(--card-bg);
-  backdrop-filter: blur(10px);
-  color: var(--text-color);
-}
-
-.option:hover {
-  background-color: var(--option-hover);
-}
-
-/* Toggle button */
-#themeToggle {
-  position: fixed;
-  top: 10px;
-  right: 15px;
-  padding: 6px 12px;
+button {
+  margin: 15px 10px 0 0;
+  padding: 10px 20px;
   border: none;
-  border-radius: 8px;
-  background-color: #fff;
-  color: #333;
-  font-weight: bold;
-  cursor: pointer;
-  z-index: 1000;
-}
-/* Theme Toggle Button Container */
-.theme-toggle-container {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  z-index: 1000;
-}
-
-/* Toggle Button Styling */
-#themeToggle {
-  padding: 10px 16px;
-  font-size: 16px;
-  font-weight: 500;
-  border: none;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.3);
-  backdrop-filter: blur(10px);
-  color: var(--text-color);
-  cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-  transition: all 0.3s ease;
-}
-
-#themeToggle:hover {
-  transform: scale(1.05);
-  background: rgba(255, 255, 255, 0.5);
-}
-/* Sidebar Toggle Button */
-.sidebar-toggle {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  z-index: 101;
-  padding: 10px 14px;
-  font-size: 20px;
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(10px);
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  color: var(--text-color);
-  transition: all 0.3s ease;
-}
-
-.sidebar-toggle:hover {
-  background-color: rgba(255, 255, 255, 0.3);
-}
-
-/* Sidebar */
-.question-sidebar {
-  position: fixed;
-  top: 80px;
-  right: 0;
-  width: 220px;
-  height: 80%;
-  padding: 20px;
-  border-radius: 20px 0 0 20px;
-  background: rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(15px);
-  box-shadow: -2px 0 12px rgba(0, 0, 0, 0.3);
-  color: var(--text-color);
-  transform: translateX(0);
-  transition: transform 0.4s ease;
-  z-index: 100;
-}
-
-.question-sidebar.hidden {
-  transform: translateX(250px);
-}
-
-.question-sidebar h3 {
-  margin-bottom: 12px;
-  font-size: 16px;
-  text-align: center;
-  color: var(--text-color);
-}
-
-/* Grid Buttons */
-.palette-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
-}
-
-.palette-grid button {
-  padding: 8px 0;
-  border: none;
-  border-radius: 10px;
-  background-color: rgba(255, 255, 255, 0.25);
-  color: var(--text-color);
-  cursor: pointer;
-  font-size: 14px;
-  transition: background-color 0.3s ease;
-}
-
-.palette-grid button:hover {
-  background-color: rgba(255, 255, 255, 0.4);
-}
-
-.palette-grid button.answered {
-  background-color: #4caf50;
+  border-radius: 20px;
+  background: linear-gradient(to right, #00bcd4, #9c27b0);
   color: white;
-}
-
-.palette-grid button.current {
-  border: 2px solid #2196f3;
-}
-/* For review panel buttons */
-.review-btn {
-  margin: 5px;
-  padding: 8px 12px;
-  border: none;
-  border-radius: 6px;
   cursor: pointer;
-  background: #eee;
-  transition: background 0.3s ease;
-}
-.review-btn.answered {
-  background: #a3d9a5;
+  font-weight: bold;
 }
 
-/* Right Sidebar */
-#reviewSidebar {
-  position: fixed;
-  right: 0;
-  top: 60px;
-  width: 180px;
-  background: rgba(255, 255, 255, 0.3);
-  backdrop-filter: blur(15px);
-  padding: 10px;
-  border-radius: 12px 0 0 12px;
-  transition: transform 0.3s ease;
-}
-#reviewSidebar.hidden {
-  transform: translateX(100%);
-}
-.question-palette {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  padding: 10px;
-}
-
-.palette-btn {
-  width: 30px;
-  height: 30px;
-  border-radius: 6px;
-  border: none;
-  background-color: #eee;
-  cursor: pointer;
-}
-
-.palette-btn.answered {
-  background-color: #aef1c6;
+button:hover {
+  opacity: 0.9;
 }
 
 #rightSidebar {
   position: fixed;
-  right: 0;
   top: 0;
+  right: 0;
+  width: 240px;
   height: 100%;
-  width: 220px;
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(12px);
-  border-left: 2px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+  padding: 20px 15px;
   transition: transform 0.3s ease-in-out;
   transform: translateX(0);
   z-index: 999;
-  padding: 10px;
-  box-shadow: -4px 0 10px rgba(0, 0, 0, 0.1);
 }
 
-#rightSidebar h3 {
-  margin-top: 50px;
-  font-size: 16px;
-  text-align: center;
-  color: #333;
-}
-
-#toggleSidebar {
-  position: absolute;
-  top: 10px;
-  left: -35px;
-  width: 30px;
-  height: 30px;
-  background-color: #ffffffcc;
-  border-radius: 6px 0 0 6px;
-  text-align: center;
-  line-height: 30px;
-  cursor: pointer;
-  box-shadow: -2px 2px 6px rgba(0, 0, 0, 0.2);
-  font-size: 18px;
+.dark-theme #rightSidebar {
+  background: rgba(34, 34, 51, 0.95);
 }
 
 #rightSidebar.hidden {
   transform: translateX(100%);
 }
 
-.question-palette {
+#toggleSidebar {
+  position: absolute;
+  left: -30px;
+  top: 20px;
+  background: #9c27b0;
+  color: white;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+#questionPalette {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
-  padding: 10px;
-  justify-content: center;
+  gap: 8px;
+  margin-top: 15px;
 }
 
 .palette-btn {
-  width: 30px;
-  height: 30px;
-  border-radius: 6px;
-  border: none;
-  background-color: #eee;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #eee;
+  text-align: center;
+  line-height: 32px;
   cursor: pointer;
   font-weight: bold;
-  transition: 0.2s;
-}
-
-.palette-btn:hover {
-  background-color: #ddd;
+  border: 2px solid transparent;
+  transition: background 0.2s, transform 0.2s;
 }
 
 .palette-btn.answered {
-  background-color: #aef1c6;
+  background: #00bcd4;
+  color: white;
+}
+
+.palette-btn.current {
+  border-color: #9c27b0;
+  transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+  #rightSidebar {
+    width: 100%;
+    height: 50%;
+    bottom: 0;
+    top: auto;
+    transform: translateY(0);
+  }
+
+  #rightSidebar.hidden {
+    transform: translateY(100%);
+  }
+
+  #toggleSidebar {
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
 }
