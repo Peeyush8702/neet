@@ -2,7 +2,7 @@ let questions = [];
 let currentQuestion = 0;
 let selectedAnswers = {};
 let timer;
-let timeLeft = 900;
+let timeLeft = 900; // 15 minutes
 
 fetch("questions.json")
   .then((res) => res.json())
@@ -29,11 +29,10 @@ function displayQuestion() {
     option.className = "option";
     option.textContent = opt;
 
-    option.onclick = (e) => {
+    option.onclick = () => {
       selectOption(index);
-      // Ripple effect
       option.classList.remove("ripple");
-      void option.offsetWidth; // reflow
+      void option.offsetWidth;
       option.classList.add("ripple");
     };
 
@@ -62,17 +61,28 @@ document.getElementById("nextBtn").onclick = () => {
   }
 };
 
+function showSubmit() {
+  document.getElementById("nextBtn").style.display = "none";
+  document.getElementById("submitBtn").style.display = "inline-block";
+}
+
 document.getElementById("submitBtn").onclick = () => {
   clearInterval(timer);
   let score = 0;
 
   questions.forEach((q, i) => {
-    if (selectedAnswers[i] === q.answer) score++;
+    if (selectedAnswers[i] === q.answer) {
+      score++;
+    }
   });
 
   document.getElementById("testContainer").style.display = "none";
   document.getElementById("resultContainer").style.display = "block";
-  document.getElementById("scoreText").textContent = `You scored ${score} out of ${questions.length} (${Math.round((score / questions.length) * 100)}%)`;
+  document.getElementById("scoreText").textContent = `🎉 You scored ${score} out of ${questions.length} (${Math.round((score / questions.length) * 100)}%)`;
+
+  // Show emoji based on performance
+  const emoji = score / questions.length >= 0.8 ? "😎" : score / questions.length >= 0.5 ? "🙂" : "😢";
+  document.getElementById("scoreText").textContent += ` ${emoji}`;
 };
 
 function updateTimerDisplay() {
@@ -88,7 +98,7 @@ function startTimer() {
     updateTimerDisplay();
     if (timeLeft <= 0) {
       clearInterval(timer);
-      alert("Time's up!");
+      alert("⏰ Time's up!");
       document.getElementById("submitBtn").click();
     }
   }, 1000);
